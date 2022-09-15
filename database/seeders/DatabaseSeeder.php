@@ -3,6 +3,16 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Database\Seeders\Develop\CommissionSeeder;
+use Database\Seeders\Develop\CustomerSeeder;
+use Database\Seeders\Develop\PartnerSeeder;
+use Database\Seeders\Develop\ProposalSeeder;
+use Database\Seeders\Develop\UserSeeder;
+use Database\Seeders\Production\CitySeeder;
+use Database\Seeders\Production\ConfigurationSeeder;
+use Database\Seeders\Production\StateSeeder;
+use Database\Seeders\Production\StatusSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +24,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $seeders = [
+            StateSeeder::class,
+            CitySeeder::class,
+            StatusSeeder::class,
+            ConfigurationSeeder::class,
+        ];
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        if (app()->environment() !== 'production') {
+            $seeders[] = UserSeeder::class;
+            $seeders[] = CustomerSeeder::class;
+            $seeders[] = PartnerSeeder::class;
+            $seeders[] = ProposalSeeder::class;
+            $seeders[] = CommissionSeeder::class;
+        }
+
+        $this->call($seeders);
     }
 }

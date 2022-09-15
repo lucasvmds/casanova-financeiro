@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('proposal_status', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('group', ['seller', 'manager', 'admin']);
-            $table->rememberToken();
-            $table->dateControl(true);
+            $table->foreignId('proposal_id')->constrained();
+            $table->foreignId('status_id')->constrained();
+            $table->string('note')->nullable();
+            $table->dateControl();
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('proposal_status');
     }
 };

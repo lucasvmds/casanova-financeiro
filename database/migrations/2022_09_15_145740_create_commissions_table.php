@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('commissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('group', ['seller', 'manager', 'admin']);
-            $table->rememberToken();
-            $table->dateControl(true);
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('proposal_id')->constrained();
+            $table->unsignedDecimal('amount');
+            $table->unsignedTinyInteger('percentage');
+            $table->dateControl();
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('commissions');
     }
 };
