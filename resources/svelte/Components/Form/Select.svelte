@@ -17,8 +17,6 @@
         <slot />
     </select>
     
-    {#if error}
-        <Error {error} />
-    {/if}
+    <Error {error} />
 </label>
     

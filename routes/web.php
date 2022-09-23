@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('session', [SessionController::class, 'index'])->name('login');
 Route::post('session', [SessionController::class, 'store'])->middleware('throttle:login')->name('session.store');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function() {
     // Rotas módulo dashboard
     Route::get('/', DashboardController::class)->name('dashboard.index');
     // Rotas módulo de sessão
@@ -29,4 +30,7 @@ Route::middleware('auth')->group(function () {
     // Rotas módulo usuários
     Route::resource('users', UserController::class)->except(['show, destroy']);
     Route::delete('users/{user}', [UserController::class, 'destroy'])->withTrashed()->name('users.destroy');
+    // Rotas módulo clientes
+    Route::resource('customers', CustomerController::class)->except(['show, destroy']);
+    Route::get('/cities/{state}', [CustomerController::class, 'cities'])->name('customers.cities');
 });

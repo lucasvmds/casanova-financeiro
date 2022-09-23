@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+
+    /**
+     * Campos para alteração em massa
+     * 
+     * @var string[]
+     */
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+    ];
 }

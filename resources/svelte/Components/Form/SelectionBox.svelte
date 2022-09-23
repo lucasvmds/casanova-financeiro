@@ -5,7 +5,7 @@
         label: string,
         value: string | number = '',
         checked: boolean = false,
-        group: Array<string | number> = [],
+        group: (string | number)[] = [],
         error: string | undefined,
         disabled: boolean = false;
 
@@ -39,6 +39,4 @@
     </span>
 </label>
 
-{#if error}
-    <Error {error} />
-{/if}
+<Error {error} />

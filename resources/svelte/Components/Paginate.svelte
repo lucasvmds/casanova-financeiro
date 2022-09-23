@@ -3,11 +3,11 @@
         current_page: number;
         per_page: number;
         last_page: number;
-        data: Array<Object>;
+        data: Object[];
     }
 
     export interface PaginateData<T> extends Paginate {
-        data: Array<T>;
+        data: T[];
     }
 </script>
 

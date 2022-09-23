@@ -32,7 +32,5 @@
         <input type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
     {/if}
     
-    {#if error}
-        <Error {error} />
-    {/if}
+    <Error {error} />
 </label>

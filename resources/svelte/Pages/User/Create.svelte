@@ -1,13 +1,5 @@
 <script lang="ts">
-    interface Errors{
-        name?: string;
-        email?: string;
-        group?: string;
-        password?: string;
-        password_confirmation?: string;
-    }
-
-    interface Data{
+    interface Data {
         name: string;
         email: string;
         group: string;
@@ -15,10 +7,10 @@
         password_confirmation: string;
     }
 
-    import { Button, Input, Select } from "../../Components/Form/index.svelte";
+    import { Button, Input, Select, Errors } from "../../Components/Form/index.svelte";
     import { Inertia } from "@inertiajs/inertia";
     import { Link } from "@inertiajs/inertia-svelte";
-    export let errors: Errors;
+    export let errors: Errors<Data>;
 
     const data: Data = {
         name: '',
