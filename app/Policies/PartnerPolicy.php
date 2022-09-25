@@ -18,7 +18,7 @@ class PartnerPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -30,7 +30,7 @@ class PartnerPolicy
      */
     public function view(User $user, Partner $partner)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -41,7 +41,7 @@ class PartnerPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class PartnerPolicy
      */
     public function update(User $user, Partner $partner)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -65,7 +65,7 @@ class PartnerPolicy
      */
     public function delete(User $user, Partner $partner)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -77,7 +77,7 @@ class PartnerPolicy
      */
     public function restore(User $user, Partner $partner)
     {
-        //
+        return $user->group === 'admin';
     }
 
     /**
@@ -89,6 +89,6 @@ class PartnerPolicy
      */
     public function forceDelete(User $user, Partner $partner)
     {
-        //
+        return false;
     }
 }

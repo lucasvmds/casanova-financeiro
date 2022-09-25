@@ -10,7 +10,6 @@ use App\Http\Requests\Customer\StoreUpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\State;
 use App\Support\FlashMessages;
-use Illuminate\Database\Eloquent\Collection;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
@@ -20,6 +19,11 @@ class CustomerController extends Controller
         $this->authorizeResource(Customer::class, 'customer');
     }
 
+    /**
+     * Retorna os estados
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     private function getStates()
     {
         return State::orderBy('name')->get(['id', 'name']);
@@ -104,7 +108,7 @@ class CustomerController extends Controller
 
     /**
      * @param State $state
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function cities(State $state)
     {

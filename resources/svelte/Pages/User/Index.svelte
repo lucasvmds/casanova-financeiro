@@ -40,7 +40,7 @@
                         <td>{user.email}</td>
                         <td>{user.group_name}</td>
                         <td>
-                            {#if user.active}
+                            {#if !user.active}
                                 <Button type="button" on:click={() => changeUserStatus(user.id)}>
                                     Ativar
                                 </Button>

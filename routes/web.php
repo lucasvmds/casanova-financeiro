@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +35,10 @@ Route::middleware('auth')->group(function() {
     // Rotas módulo clientes
     Route::resource('customers', CustomerController::class)->except(['show, destroy']);
     Route::get('/cities/{state}', [CustomerController::class, 'cities'])->name('customers.cities');
+    // Rotas módulo financeiras
+    Route::resource('partners', PartnerController::class)->except(['show, destroy']);
+    Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->withTrashed()->name('partners.destroy');
+    // Rotas módulo produtos
+    Route::resource('products', ProductController::class)->except(['show, destroy']);
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])->withTrashed()->name('products.destroy');
 });

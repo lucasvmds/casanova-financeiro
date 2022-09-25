@@ -67,7 +67,7 @@ class User extends Authenticatable
     protected function active(): Attribute
     {
         return new Attribute(
-            get: fn(): bool => (bool) $this->deleted_at,
+            get: fn(): bool => !(bool) $this->deleted_at,
         );
     }
 
