@@ -1,7 +1,8 @@
 <script lang="ts">
-    interface Partner {
+    interface Product {
         id: number;
         name: string;
+        commission: number;
         linked: number;
         active: boolean;
     }
@@ -10,17 +11,17 @@
     import { Inertia } from "@inertiajs/inertia";
     import { page } from "@inertiajs/inertia-svelte";
 
-    let partners: Partner[];
-    $: partners = $page.props.partners || [];
+    let products: Product[];
+    $: products = $page.props.products || [];
 
-    function changePartnerStatus(id: number): void
+    function changeProductStatus(id: number): void
     {
-        Inertia.delete(`/partners/${id}`, { preserveScroll: true });
+        Inertia.delete(`/products/${id}`, { preserveScroll: true });
     }
 
     function openEditionPage(id: number): void
     {
-        Inertia.get(`/partners/${id}/edit`, {}, {
+        Inertia.get(`/products/${id}/edit`, {}, {
             onFinish: () => document.dispatchEvent(new CustomEvent('custom:refresh')),
         });
     }
@@ -31,25 +32,27 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Produtos</th>
+                <th>Comissão</th>
+                <th>Parceiros</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            {#each partners as item}
+            {#each products as item}
                 <tr>
                     <td>{item.name}</td>
+                    <td>{item.commission}</td>
                     <td>{item.linked}</td>
                     <td>
                         {#if !item.active}
-                                <Button type="button" on:click={() => changePartnerStatus(item.id)}>
+                                <Button type="button" on:click={() => changeProductStatus(item.id)}>
                                     Ativar
                                 </Button>
                             {:else}
                                 <Button type="button" on:click={() => openEditionPage(item.id)}>
                                     Editar
                                 </Button>
-                                <Button type="button" on:click={() => changePartnerStatus(item.id)}>
+                                <Button type="button" on:click={() => changeProductStatus(item.id)}>
                                     Desativar
                                 </Button>
                             {/if}

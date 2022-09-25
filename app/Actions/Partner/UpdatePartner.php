@@ -16,17 +16,17 @@ class UpdatePartner
                 'name' => $data['name'],
             ]);
 
-            $partnerProductsId = $partner->products()
+            $partner_products_id = $partner->products()
                 ->get(['products.id'])
                 ->pluck('id')
                 ->toArray();
             
             $partner->products()->detach(
-                array_diff($partnerProductsId, $data['products'])
+                array_diff($partner_products_id, $data['products'])
             );
 
             $partner->products()->attach(
-                array_diff($data['products'], $partnerProductsId)
+                array_diff($data['products'], $partner_products_id)
             );
         });
     }

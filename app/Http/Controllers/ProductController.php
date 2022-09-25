@@ -1,13 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\Actions\Common\DeleteOrRestoreModel;
+use App\Actions\Product\CreateNewProduct;
+use App\Actions\Product\UpdateProduct;
+use App\Http\Requests\Product\StoreUpdateProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Models\Partner;
+use App\Support\FlashMessages;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
+    private function getCommonData(string $type, array $props = []): array
+    {
+        return [
+            'products' => Product::withTrashed()->get([
+                'id',
+                'name',
+                'commission',
+                'deleted_at',
+            ]),
+            'type' => $type,
+            ...$props,
+        ];
+    }
+
+    private function getCommonDataWithPartners(string $type, array $props = []): array
+    {
+        return $this->getCommonData($type, [
+            'partners' => Partner::orderBy('name')->get([
+                'id',
+                'name',
+            ]),
+            ...$props,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,14 +52,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Inertia::render('PartnerProduct/Index', [
-            'partnersProducts' => Product::withTrashed()->get([
-                'id',
-                'name',
-                'commission'
-            ]),
-            'type' => 'products',
-        ]);
+        return Inertia::render('Product/Main', $this->getCommonData('index'));
     }
 
     /**
@@ -32,29 +62,20 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Product/Main', $this->getCommonDataWithPartners('create'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreUpdateProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+        CreateNewProduct::run($request->validated());
+        FlashMessages::success('Produto criado com sucesso');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -65,19 +86,24 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return Inertia::render('Product/Main', $this->getCommonDataWithPartners('edit', [
+            'product_partners' => $product->partners()->get(['partners.id'])->pluck('id'),
+            'product' => $product,
+        ]));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreUpdateProductRequest  $request
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreUpdateProductRequest $request, Product $product)
     {
-        //
+        UpdateProduct::run($request->validated(), $product);
+        FlashMessages::success('Produto editado com sucesso');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -88,6 +114,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        DeleteOrRestoreModel::run($product);
+        return redirect()->route('products.index');
     }
 }

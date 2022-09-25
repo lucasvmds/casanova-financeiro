@@ -14,7 +14,7 @@
         <Link href="/">Dashboard</Link>
         <Link href="/customers">Clientes</Link>
         <Link href="/proposals">Propostas</Link>
-        <Link href="/partners">Financeiras</Link>
+        <Link href="/partners">Parceiros</Link>
         <Link href="/products">Produtos</Link>
         <Link href="/users">Usuários</Link>
         <Link href="/configurations">Configurações</Link>
