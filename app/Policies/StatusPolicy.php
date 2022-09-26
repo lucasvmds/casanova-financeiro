@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Configuration;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ConfigurationPolicy
+class StatusPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ConfigurationPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Configuration  $configuration
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Configuration $configuration)
+    public function view(User $user, Status $status)
     {
         return $user->group === 'admin';
     }
@@ -48,10 +48,10 @@ class ConfigurationPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Configuration  $configuration
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Configuration $configuration)
+    public function update(User $user, Status $status)
     {
         return $user->group === 'admin';
     }
@@ -60,34 +60,34 @@ class ConfigurationPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Configuration  $configuration
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Configuration $configuration)
+    public function delete(User $user, Status $status)
     {
-        return false;
+        return $user->group === 'admin';
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Configuration  $configuration
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Configuration $configuration)
+    public function restore(User $user, Status $status)
     {
-        return false;
+        return $user->group === 'admin';
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Configuration  $configuration
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Configuration $configuration)
+    public function forceDelete(User $user, Status $status)
     {
         return false;
     }

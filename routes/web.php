@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PartnerController;
@@ -41,4 +42,7 @@ Route::middleware('auth')->group(function() {
     // Rotas módulo produtos
     Route::resource('products', ProductController::class)->except(['show, destroy']);
     Route::delete('products/{product}', [ProductController::class, 'destroy'])->withTrashed()->name('products.destroy');
+    // Rotas módulo de configurações
+    Route::get('/configurations', [ConfigurationController::class, 'index'])->name('configurations.index');
+    Route::patch('/configurations', [ConfigurationController::class, 'update'])->name('configurations.update');
 });

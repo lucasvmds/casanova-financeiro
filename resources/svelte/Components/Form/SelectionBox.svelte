@@ -1,7 +1,7 @@
 <script lang="ts">
     import Error from "./Error.svelte";
     export let
-        type: string,
+        type: 'checkbox' | 'checkgroup' | 'radio',
         label: string,
         value: string | number = '',
         checked: boolean = false,

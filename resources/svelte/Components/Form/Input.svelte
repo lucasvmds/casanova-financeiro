@@ -1,7 +1,17 @@
 <script lang="ts">
+    type Type = 
+        'password' |
+        'number' |
+        'email' |
+        'text' |
+        'tel' |
+        'date' |
+        'search' |
+        'color';
+
     import Error from "./Error.svelte";
     export let
-        type: string,
+        type: Type,
         label: string,
         value: string | number | undefined,
         error: string | undefined,
@@ -24,12 +34,10 @@
         <input type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
     {:else if type === 'date'}
         <input type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
-    {:else if type === 'time'}
-        <input type="time" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
-    {:else if type === 'datetime-local'}
-        <input type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
     {:else if type === 'search'}
         <input type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
+    {:else if type === 'color'}
+        <input type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
     {/if}
     
     <Error {error} />
