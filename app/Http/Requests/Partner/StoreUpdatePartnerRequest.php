@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Partner;
 
+use App\Rules\HasValidCommission;
+use App\Rules\IsValidCommission;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUpdatePartnerRequest extends FormRequest
@@ -25,8 +27,13 @@ class StoreUpdatePartnerRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'products' => 'required|array',
-            'products.*' => 'required|numeric',
+            'products' => 'nullable|array',
+            'products.*' => [
+                'required',
+                'numeric',
+                new HasValidCommission,
+            ],
+            'commissions.*' => [ new IsValidCommission ],
         ];
     }
 }

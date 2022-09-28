@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Proposal;
@@ -10,6 +12,23 @@ class ProposalPolicy
 {
     use HandlesAuthorization;
 
+    private function userIsManagerOrAdmin(User $user): bool
+    {
+        return $user->group === 'manager' || $user->group === 'admin';
+    }
+
+    private function userIsProposalOwner(User $user, Proposal $proposal): bool
+    {
+        return $proposal->user_id === $user->id;
+    }
+
+    private function authorize(User $user, ?Proposal $proposal): bool
+    {
+        return $proposal instanceof Proposal ?
+            ($this->userIsManagerOrAdmin($user) || $this->userIsProposalOwner($user, $proposal)) :
+            $this->userIsManagerOrAdmin($user);
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +37,7 @@ class ProposalPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +49,7 @@ class ProposalPolicy
      */
     public function view(User $user, Proposal $proposal)
     {
-        //
+        $this->authorize($user, $proposal);
     }
 
     /**
@@ -41,7 +60,7 @@ class ProposalPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +72,7 @@ class ProposalPolicy
      */
     public function update(User $user, Proposal $proposal)
     {
-        //
+        $this->authorize($user, $proposal);
     }
 
     /**
@@ -65,7 +84,7 @@ class ProposalPolicy
      */
     public function delete(User $user, Proposal $proposal)
     {
-        //
+        return false;
     }
 
     /**
@@ -77,7 +96,7 @@ class ProposalPolicy
      */
     public function restore(User $user, Proposal $proposal)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +108,6 @@ class ProposalPolicy
      */
     public function forceDelete(User $user, Proposal $proposal)
     {
-        //
+        return false;
     }
 }

@@ -18,7 +18,6 @@ class ProductFactory extends Factory
     {
         return [
             'name' => ucwords( fake()->words(asText: true) ),
-            'commission' => fake()->numberBetween(int2: 40),
         ];
     }
 }

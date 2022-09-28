@@ -34,7 +34,6 @@
         delete data.items;
         currentPage > 1 ? data.page = currentPage : null;
         currentItems > stepNumber ? data.items = currentItems : null;
-        console.log(data);
         Inertia.get(location.pathname, data, { preserveScroll: true });
     }
 </script>

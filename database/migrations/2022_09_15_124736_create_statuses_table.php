@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('main', ['open', 'closed', 'approved']);
             $table->char('color', 7);
             $table->dateControl(true);
         });

@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,8 +35,9 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class)->except(['show, destroy']);
     Route::delete('users/{user}', [UserController::class, 'destroy'])->withTrashed()->name('users.destroy');
     // Rotas módulo clientes
-    Route::resource('customers', CustomerController::class)->except(['show, destroy']);
+    Route::resource('customers', CustomerController::class)->except(['destroy']);
     Route::get('/cities/{state}', [CustomerController::class, 'cities'])->name('customers.cities');
+    Route::get('/customers-search', [CustomerController::class, 'search'])->name('customers.search');
     // Rotas módulo financeiras
     Route::resource('partners', PartnerController::class)->except(['show, destroy']);
     Route::delete('partners/{partner}', [PartnerController::class, 'destroy'])->withTrashed()->name('partners.destroy');
@@ -45,4 +47,6 @@ Route::middleware('auth')->group(function() {
     // Rotas módulo de configurações
     Route::get('/configurations', [ConfigurationController::class, 'index'])->name('configurations.index');
     Route::patch('/configurations', [ConfigurationController::class, 'update'])->name('configurations.update');
+    // Rotas módulo de propostas
+    Route::resource('proposals', ProposalController::class)->except(['show', 'destroy']);
 });

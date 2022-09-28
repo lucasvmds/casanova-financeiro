@@ -16,7 +16,11 @@ class CreateNewPartner
                 'name' => $data['name'],
             ]);
 
-            $partner->products()->attach($data['products']);
+            foreach ($data['products'] ?? [] as $product_id) {
+                $partner->products()->attach($product_id, [
+                    'commission' => $data['commissions'][$product_id],
+                ]);
+            }
         });
     }
 }

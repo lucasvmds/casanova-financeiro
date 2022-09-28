@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * 
  * @package 
  * @method static self create()
+ * @method static self|null find(int $id)
  */
 class Product extends Model
 {
@@ -18,13 +19,12 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'commission',
     ];
 
     /**
      * Relacionamento com a tabela `partners`
      * 
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function partners()
     {

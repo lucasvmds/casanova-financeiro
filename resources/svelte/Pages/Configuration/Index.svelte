@@ -37,6 +37,7 @@
             name: '',
             color: '#000000',
             active: true,
+            main: 'open',
         });
         data.statuses = data.statuses;
     }

@@ -23,6 +23,7 @@ class ConfigurationController extends Controller
                 'id',
                 'name',
                 'color',
+                'main',
                 'deleted_at',
             ]),
             'config' => Configuration::first([

@@ -19,7 +19,10 @@ class PartnerSeeder extends Seeder
     public function run()
     {
         Partner::factory(5)
-            ->has(Product::factory(2))
+            ->hasAttached(
+                Product::factory(2),
+                [ 'commission' => fake()->numberBetween(0, 100), ],
+            )
             ->create();
     }
 }

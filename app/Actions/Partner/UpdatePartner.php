@@ -22,12 +22,21 @@ class UpdatePartner
                 ->toArray();
             
             $partner->products()->detach(
-                array_diff($partner_products_id, $data['products'])
+                array_diff($partner_products_id, $data['products'] ?? [])
             );
 
-            $partner->products()->attach(
-                array_diff($data['products'], $partner_products_id)
-            );
+            foreach ($data['products'] ?? [] as $product_id) {
+                $partner->products()->updateExistingPivot(
+                    $product_id,
+                    [ 'commission' => $data['commissions'][$product_id], ],
+                );
+            }
+
+            foreach (array_diff($data['products'] ?? [], $partner_products_id) as $product_id) {
+                $partner->products()->attach($product_id, [
+                    'commission' => $data['commissions'][$product_id],
+                ]);
+            }
         });
     }
 }

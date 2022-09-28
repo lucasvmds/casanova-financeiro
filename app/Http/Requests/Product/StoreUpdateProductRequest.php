@@ -25,9 +25,6 @@ class StoreUpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'commission' => 'required|numeric',
-            'partners' => 'required|array',
-            'partners.*' => 'required|numeric',
         ];
     }
 }

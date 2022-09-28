@@ -19,7 +19,10 @@ class ProposalSeeder extends Seeder
     public function run()
     {
         Proposal::factory(5)
-            ->has(Status::factory())
+            ->hasAttached(
+                Status::factory(),
+                [ 'note' => fake()->words(asText: true), ],
+            )
             ->create();
     }
 }

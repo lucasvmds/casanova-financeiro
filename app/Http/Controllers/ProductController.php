@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Common\DeleteOrRestoreModel;
-use App\Actions\Product\CreateNewProduct;
-use App\Actions\Product\UpdateProduct;
 use App\Http\Requests\Product\StoreUpdateProductRequest;
 use App\Models\Product;
-use App\Models\Partner;
 use App\Support\FlashMessages;
 use Inertia\Inertia;
 
@@ -26,23 +23,11 @@ class ProductController extends Controller
             'products' => Product::withTrashed()->get([
                 'id',
                 'name',
-                'commission',
                 'deleted_at',
             ]),
             'type' => $type,
             ...$props,
         ];
-    }
-
-    private function getCommonDataWithPartners(string $type, array $props = []): array
-    {
-        return $this->getCommonData($type, [
-            'partners' => Partner::orderBy('name')->get([
-                'id',
-                'name',
-            ]),
-            ...$props,
-        ]);
     }
 
     /**
@@ -62,7 +47,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Product/Main', $this->getCommonDataWithPartners('create'));
+        return Inertia::render('Product/Main', $this->getCommonData('create'));
     }
 
     /**
@@ -73,7 +58,7 @@ class ProductController extends Controller
      */
     public function store(StoreUpdateProductRequest $request)
     {
-        CreateNewProduct::run($request->validated());
+        Product::create($request->validated());
         FlashMessages::success('Produto criado com sucesso');
         return redirect()->route('products.index');
     }
@@ -86,8 +71,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Product/Main', $this->getCommonDataWithPartners('edit', [
-            'product_partners' => $product->partners()->get(['partners.id'])->pluck('id'),
+        return Inertia::render('Product/Main', $this->getCommonData('edit', [
             'product' => $product,
         ]));
     }
@@ -101,7 +85,7 @@ class ProductController extends Controller
      */
     public function update(StoreUpdateProductRequest $request, Product $product)
     {
-        UpdateProduct::run($request->validated(), $product);
+        $product->update($request->validated());
         FlashMessages::success('Produto editado com sucesso');
         return redirect()->route('products.index');
     }

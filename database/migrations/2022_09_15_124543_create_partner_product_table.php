@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('partner_id')->constrained();
             $table->foreignId('product_id')->constrained();
+            $table->unsignedTinyInteger('commission');
             $table->dateControl();
         });
     }

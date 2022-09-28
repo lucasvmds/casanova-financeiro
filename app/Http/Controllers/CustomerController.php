@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Customer\CreateNewCustomer;
+use App\Actions\Customer\GetSearchResults;
 use App\Actions\Customer\PaginateCustomerRecords;
 use App\Actions\Customer\UpdateCustomer;
 use App\Http\Requests\Customer\IndexCustomerRequest;
+use App\Http\Requests\Customer\SearchCustomerRequest;
 use App\Http\Requests\Customer\StoreUpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\State;
@@ -43,6 +45,14 @@ class CustomerController extends Controller
         } else {
             return redirect()->route('customers.index',['items' => $request->validated('items')]);
         }
+    }
+
+    public function show(Customer $customer)
+    {
+        return $customer->makeHidden([
+            'phone',
+            'additional_info',
+        ]);
     }
 
     /**
@@ -113,5 +123,10 @@ class CustomerController extends Controller
     public function cities(State $state)
     {
         return $state->cities()->get(['id', 'name']);
+    }
+
+    public function search(SearchCustomerRequest $request)
+    {
+        return GetSearchResults::run($request->validated('search'));
     }
 }

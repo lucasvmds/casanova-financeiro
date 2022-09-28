@@ -7,13 +7,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @package 
  * @method static static create()
+ * @method static \Illuminate\Database\Eloquent\Builder where()
  */
 class Customer extends Model
 {
@@ -51,7 +50,7 @@ class Customer extends Model
     /**
      * Relacionamento com a tabela `contacts`
      * 
-     * @return HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function contacts()
     {
@@ -61,7 +60,7 @@ class Customer extends Model
     /**
      * Relacionamento com a tabela `proposals`
      * 
-     * @return HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function proposals()
     {
@@ -69,7 +68,7 @@ class Customer extends Model
     }
 
     /**
-     * @return BelongsTo 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function state()
     {
@@ -77,7 +76,7 @@ class Customer extends Model
     }
 
     /**
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function city()
     {

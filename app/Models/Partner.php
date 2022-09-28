@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\PartnerProductCommons;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -24,10 +23,14 @@ class Partner extends Model
     /**
      * Relacionamento com a tabela `products`
      * 
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)
+            ->withTimestamps()
+            ->withPivot([
+                'commission',
+            ]);
     }
 }

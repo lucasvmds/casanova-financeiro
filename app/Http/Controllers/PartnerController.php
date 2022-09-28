@@ -86,7 +86,7 @@ class PartnerController extends Controller
     public function edit(Partner $partner)
     {
         return Inertia::render('Partner/Main', $this->getCommonDataWithProducts('edit', [
-            'partner_products' => $partner->products()->get(['products.id'])->pluck('id'),
+            'partner_products' => $partner->products()->get(['products.id']),
             'partner' => $partner,
         ]));
     }

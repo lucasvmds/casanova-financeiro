@@ -25,6 +25,8 @@ class UpdateConfiguration
                 ];
 
                 if (isset($status['id'])) {
+                    // Os IDs < 4 são os status padrões do sistema,
+                    // não podendo ser feitas certas modificações neles
                     if ($status['id'] <= 3) {
                         unset(
                             $status_data['deleted_at'],
@@ -36,6 +38,7 @@ class UpdateConfiguration
                         ->find($status['id'])
                         ->update($status_data);
                 } else {
+                    $status_data['main'] = $status['main'];
                     Status::create($status_data);
                 }
             }

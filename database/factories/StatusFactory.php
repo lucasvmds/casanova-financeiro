@@ -16,12 +16,9 @@ class StatusFactory extends Factory
      */
     public function definition()
     {
-        $name = ucwords( fake()->words(asText: true) );
         return [
-            'name' => $name,
-            'code' => strtolower(
-                preg_replace('/\s/', '-', $name)
-            ),
+            'name' => ucwords( fake()->words(2, true) ),
+            'main' => fake()->randomElement(['open', 'approved', 'closed']),
             'color' => '#000000',
         ];
     }
@@ -37,15 +34,15 @@ class StatusFactory extends Factory
         $production_statuses = [
             'open' => [
                 'name' => 'Em Aberto',
-                'code' => 'em-aberto',
+                'main' => 'open',
             ],
             'approved' => [
                 'name' => 'Aprovado',
-                'code' => 'aprovado',
+                'main' => 'approved',
             ],
             'closed' => [
                 'name' => 'Fechado',
-                'code' => 'fechado',
+                'main' => 'closed',
             ],
         ];
 

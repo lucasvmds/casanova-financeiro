@@ -2,7 +2,6 @@
     interface Product {
         id: number;
         name: string;
-        commission: number;
         linked: number;
         active: boolean;
     }
@@ -22,7 +21,7 @@
     function openEditionPage(id: number): void
     {
         Inertia.get(`/products/${id}/edit`, {}, {
-            onFinish: () => document.dispatchEvent(new CustomEvent('custom:refresh')),
+            onFinish: () => document.dispatchEvent(new CustomEvent('products:refresh')),
         });
     }
 </script>
@@ -32,7 +31,6 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Comissão</th>
                 <th>Parceiros</th>
                 <th>Ações</th>
             </tr>
@@ -41,7 +39,6 @@
             {#each products as item}
                 <tr>
                     <td>{item.name}</td>
-                    <td>{item.commission}</td>
                     <td>{item.linked}</td>
                     <td>
                         {#if !item.active}
