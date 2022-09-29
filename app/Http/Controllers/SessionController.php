@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Session\UpdateUserProfile;
+use App\Actions\Session\UpdateCurrentUser;
 use App\Actions\Session\ValidateUserCredentials;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Session\StoreSessionRequest;
@@ -53,7 +53,6 @@ class SessionController extends Controller
     {
         return Inertia::render('Session/Edit', [
             'user' => $request->user(),
-            'previous_url' => $request->query('url'),
         ]);
     }
 
@@ -65,27 +64,21 @@ class SessionController extends Controller
      */
     public function update(UpdateSessionRequest $request)
     {
-        UpdateUserProfile::run($request);
-        FlashMessages::success('Perfil alterado com sucesso');
-        // Verifica se a url de redirecionamento encaminha para outro endereço
-        if (preg_match('/^(http)/', $request->input('previous_url'))) {
-            return redirect()->route('dashboard.index');
-        } else {
-            return redirect($request->input('previous_url'));
-        }
+        UpdateCurrentUser::run($request->user(), $request->validated());
+        FlashMessages::success('Usuário alterado com sucesso');
+        return redirect()->route('dashboard.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        session()->invalidate();
+        session()->regenerateToken();
         return redirect()->route('login');
     }
 }

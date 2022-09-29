@@ -21,6 +21,9 @@
     </nav>
 
     <div>
+        <Link href="/session/edit">
+            Modificar usuário
+        </Link>
         <Button type="button" on:click={destroySession}>Sair</Button>
     </div>
 </header>

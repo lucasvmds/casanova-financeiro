@@ -31,7 +31,6 @@ class UpdateSessionRequest extends FormRequest
                 'required',
                 Rule::unique('users')->ignore($this->user()->id),
             ],
-            'phone' => 'present',
             'current_password' => 'current_password',
             'password' => [
                 'nullable',

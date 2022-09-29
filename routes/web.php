@@ -28,8 +28,8 @@ Route::middleware('auth')->group(function() {
     // Rotas módulo dashboard
     Route::get('/', DashboardController::class)->name('dashboard.index');
     // Rotas módulo de sessão
-    // Route::get('session/edit', [SessionController::class, 'edit'])->name('session.edit');
-    // Route::patch('session', [SessionController::class, 'update'])->name('session.update');
+    Route::get('session/edit', [SessionController::class, 'edit'])->name('session.edit');
+    Route::patch('session', [SessionController::class, 'update'])->name('session.update');
     Route::delete('session', [SessionController::class, 'destroy'])->name('session.destroy');
     // Rotas módulo usuários
     Route::resource('users', UserController::class)->except(['show, destroy']);
