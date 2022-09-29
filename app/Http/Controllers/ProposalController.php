@@ -32,7 +32,7 @@ class ProposalController extends Controller
     public function index(IndexProposalRequest $request)
     {
         if ($proposals = PaginateProposalRecords::run($request)) {
-            return Inertia::render('Proposal/Index', [
+            return Inertia::render('Proposal/Index/Main', [
                 'proposals' => $proposals
             ]);
         } else {

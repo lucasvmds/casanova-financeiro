@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package 
  * @method static static create()
  * @method static \Illuminate\Database\Eloquent\Builder where()
+ * @method static \Illuminate\Database\Eloquent\Builder orderBy()
  */
 class Customer extends Model
 {

@@ -25,6 +25,7 @@ class IndexProposalRequest extends FormRequest
     {
         return [
             'items' => 'nullable|numeric|max:100',
+            'search' => 'nullable|string',
         ];
     }
 }

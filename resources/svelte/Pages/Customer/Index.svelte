@@ -9,7 +9,17 @@
 
     import Paginate, { PaginateData } from "../../Components/Paginate.svelte";
     import { Link } from "@inertiajs/inertia-svelte";
+    import Button from "../../Components/Form/Button.svelte";
+    import { openModal } from "../../Base/Modal.svelte";
+    import CustomerSearch from "./CustomerSearch.svelte";
     export let customers: PaginateData<Customer>;
+
+    function openSearchCustomersModal(): void
+    {
+        openModal({
+            component: CustomerSearch
+        });
+    }
 </script>
 
 <svelte:head>
@@ -58,4 +68,7 @@
     <Link href="/customers/create">
         Adicionar cliente
     </Link>
+    <Button type="button" on:click={openSearchCustomersModal}>
+        Pesquisar
+    </Button>
 </aside>

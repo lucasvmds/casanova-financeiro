@@ -62,6 +62,11 @@ class Proposal extends Model
         return $this->belongsTo(Product::class)->withTrashed();
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withTrashed();
+    }
+
     protected function currentStatus(): Attribute
     {
         return new Attribute(
@@ -80,6 +85,13 @@ class Proposal extends Model
     {
         return new Attribute(
             get: fn() => $this->product()->withTrashed()->first('name')->name,
+        );
+    }
+
+    protected function sellerName(): Attribute
+    {
+        return new Attribute(
+            get: fn() => $this->user()->first('name')->name,
         );
     }
 }
