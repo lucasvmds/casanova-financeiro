@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * 
  * @package 
  * @method static \Illuminate\Database\Eloquent\Builder where()
+ * @method static self find()
  */
 class Status extends Model
 {

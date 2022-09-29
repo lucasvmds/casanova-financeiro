@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package 
  * @method static self create()
  * @method static self|null find(int $id)
+ * @method static \Illuminate\Database\Eloquent\Builder orderBy()
  */
 class Product extends Model
 {
@@ -28,6 +29,7 @@ class Product extends Model
      */
     public function partners()
     {
-        return $this->belongsToMany(Partner::class);
+        return $this->belongsToMany(Partner::class)
+            ->withPivot(['commission']);
     }
 }

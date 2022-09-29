@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('proposal_id')->constrained();
             $table->foreignId('status_id')->constrained();
-            $table->string('note')->nullable();
+            $table->string('note');
             $table->dateControl();
         });
     }

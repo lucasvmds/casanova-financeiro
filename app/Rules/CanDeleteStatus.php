@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Enums\MainStatus;
 use App\Models\Proposal;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -21,9 +22,9 @@ class CanDeleteStatus implements Rule
         $this->status = $value;
 
         if (! $value['active']) {
-            return ! Proposal::where('status_id', $value['id'])
-                ->take(1)
-                ->exists();
+            foreach (Proposal::where('status_id', $value['id'])->get() as $proposal) {
+                if ($proposal->status()->first('main')->main === MainStatus::OPEN->value) return false;
+            }
         }
 
         return true;

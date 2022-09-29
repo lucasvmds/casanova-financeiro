@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Commission extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'proposal_id',
+        'user_id',
+        'amount',
+        'percentage',
+    ];
 }

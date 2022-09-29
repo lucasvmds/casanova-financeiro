@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserGroup;
 use App\Models\Proposal;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -14,7 +15,7 @@ class ProposalPolicy
 
     private function userIsManagerOrAdmin(User $user): bool
     {
-        return $user->group === 'manager' || $user->group === 'admin';
+        return $user->group === UserGroup::MANAGER->value || $user->group === UserGroup::ADMIN->value;
     }
 
     private function userIsProposalOwner(User $user, Proposal $proposal): bool
@@ -35,7 +36,7 @@ class ProposalPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -47,9 +48,9 @@ class ProposalPolicy
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Proposal $proposal)
+    public function view(User $user, Proposal $proposal): bool
     {
-        $this->authorize($user, $proposal);
+        return $this->authorize($user, $proposal);
     }
 
     /**
@@ -58,7 +59,7 @@ class ProposalPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
@@ -70,9 +71,9 @@ class ProposalPolicy
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Proposal $proposal)
+    public function update(User $user, Proposal $proposal): bool
     {
-        $this->authorize($user, $proposal);
+        return $this->authorize($user, $proposal);
     }
 
     /**
@@ -82,7 +83,7 @@ class ProposalPolicy
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Proposal $proposal)
+    public function delete(User $user, Proposal $proposal): bool
     {
         return false;
     }
@@ -94,7 +95,7 @@ class ProposalPolicy
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Proposal $proposal)
+    public function restore(User $user, Proposal $proposal): bool
     {
         return false;
     }
@@ -106,7 +107,7 @@ class ProposalPolicy
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Proposal $proposal)
+    public function forceDelete(User $user, Proposal $proposal): bool
     {
         return false;
     }

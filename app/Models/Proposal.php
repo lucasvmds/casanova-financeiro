@@ -23,6 +23,8 @@ class Proposal extends Model
         'additional_info',
         'status_id',
         'user_id',
+        'partner_id',
+        'contract_identifier',
     ];
 
     protected $appends = [
@@ -34,7 +36,7 @@ class Proposal extends Model
      */
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class)->withTrashed();
     }
 
     /**
@@ -57,7 +59,7 @@ class Proposal extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 
     protected function currentStatus(): Attribute

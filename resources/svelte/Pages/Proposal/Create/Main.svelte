@@ -80,7 +80,7 @@
                     <option value={product.id}>{product.name}</option>
                 {/each}
             </Select>
-            <Input type="number" label="Valor requerido (R$)" bind:value={data.required_amount} error={errors.required_amount} min=0 required />
+            <Input type="number" label="Valor requerido (R$)" bind:value={data.required_amount} error={errors.required_amount} min=0 required step="0.01" />
         </fieldset>
         <fieldset>
             <legend>Informações adicionais</legend>

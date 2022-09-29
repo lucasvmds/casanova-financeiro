@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Proposal\ControllerData\GetPartners;
+use App\Actions\Proposal\ControllerData\GetProposalStatuses;
+use App\Actions\Proposal\ControllerData\GetStatuses;
 use App\Actions\Proposal\CreateNewProposal;
 use App\Actions\Proposal\PaginateProposalRecords;
+use App\Actions\Proposal\ProposalIsEditable;
+use App\Actions\Proposal\UpdateProposal;
 use App\Http\Requests\Proposal\IndexProposalRequest;
 use App\Http\Requests\Proposal\StoreProposalRequest;
 use App\Http\Requests\Proposal\UpdateProposalRequest;
 use App\Models\Product;
 use App\Models\Proposal;
-use App\Models\Status;
 use App\Support\FlashMessages;
-use Illuminate\Support\Collection;
 use Inertia\Inertia;
 
 class ProposalController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Proposal::class, 'proposal');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +48,9 @@ class ProposalController extends Controller
     public function create()
     {
         return Inertia::render('Proposal/Create/Main', [
-            'products' => Product::orderBy('name')->get(['id', 'name']),
+            'products' => Product::orderBy('name')->get(['id', 'name'])->filter(
+                fn($value) => (bool) $value->partners()->count()
+            ),
         ]);
     }
 
@@ -58,17 +68,6 @@ class ProposalController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Proposal $proposal)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Proposal  $proposal
@@ -76,47 +75,30 @@ class ProposalController extends Controller
      */
     public function edit(Proposal $proposal)
     {
+        if (! ProposalIsEditable::run($proposal)) {
+            FlashMessages::shareNow()
+                ->warning('A proposta já está fechada ou aprovada, não podendo mais ser editada');
+        }
+
         return Inertia::render('Proposal/Edit/Main', [
             'proposal' => $proposal,
-            'statuses' => Status::orderBy('name')->get([
-                'id',
-                'name',
-                'color',
-            ]),
-            'proposal_statuses' => $this->getProposalStatuses($proposal),
-            'partners' => Product::find($proposal->product_id)->partners()->orderBy('name')->get(['partners.id', 'partners.name']),
+            'statuses' => GetStatuses::get($proposal),
+            'proposal_statuses' => GetProposalStatuses::get($proposal),
+            'partners' => GetPartners::get($proposal),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProposalRequest $request, Proposal $proposal)
     {
+        if (! ProposalIsEditable::run($proposal)) return back();
+
+        UpdateProposal::run($request->validated(), $proposal);
         FlashMessages::success('Proposta editada com sucesso');
         return redirect()->route('proposals.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Proposal $proposal)
-    {
-        //
-    }
-
-    private function getProposalStatuses(Proposal $proposal): Collection
-    {
-        return $proposal->statuses()
-            ->withTrashed()
-            ->orderByPivot('created_at', 'desc')
-            ->get(['name', 'color']);
     }
 }

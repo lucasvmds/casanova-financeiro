@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserGroup;
 use App\Models\Configuration;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,7 @@ class ConfigurationPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -30,7 +31,7 @@ class ConfigurationPolicy
      */
     public function view(User $user, Configuration $configuration)
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -41,7 +42,7 @@ class ConfigurationPolicy
      */
     public function create(User $user)
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -53,7 +54,7 @@ class ConfigurationPolicy
      */
     public function update(User $user, Configuration $configuration)
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**

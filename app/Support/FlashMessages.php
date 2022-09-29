@@ -4,54 +4,77 @@ declare(strict_types=1);
 
 namespace App\Support;
 
+use BadMethodCallException;
+use Inertia\Inertia;
+
+/**
+ * 
+ * @package App\Support
+ * @method static self success(string $content)
+ * @method static self warning(string $content)
+ * @method static self error(string $content)
+ * @method self success(string $content)
+ * @method self warning(string $content)
+ * @method self error(string $content)
+ */
 class FlashMessages
 {
-    /**
-     * Adiciona novas mensagens flash
-     * 
-     * @param string $level
-     * @param string $content
-     * @return void
-     */
-    private static function add (string $level, string $content): void
+    private const MESSAGE_LEVES = [
+        'success',
+        'warning',
+        'error',
+    ];
+
+    public function __construct(
+        private bool $share_now = false,
+    ){}
+
+    private function shouldShareNow(): bool
     {
-        $messages = session()->get('flash_messages') ?? [];
-        $messages[] = [
+        return (bool) Inertia::getShared('flash_messages') || $this->share_now;
+    }
+
+    private function add(string $level, string $content): void
+    {
+        $message_data = [
             'id' => uniqid(),
             'level' => $level,
             'content' => $content,
         ];
-        session()->flash('flash_messages', $messages);
+
+        if ($this->shouldShareNow()) {
+            $messages = Inertia::getShared('flash_messages', []);
+            $messages[] = $message_data;
+            Inertia::share('flash_messages', $messages);
+        } else {
+            $messages = session()->get('flash_messages', []);
+            $messages[] = $message_data;
+            session()->flash('flash_messages', $messages);
+        }
     }
 
-    /**
-     * Adiciona mensagem de sucesso (cor verde)
-     * 
-     * @param string $content Conteudo da mensagem
-     * @return void
-     */
-    public static function success(string $content): void
+    public static function shareNow(): self
     {
-        self::add('success', $content);
+        return new static(true); 
     }
-    /**
-     * Adiciona mensagem de erro (cor vermelha)
-     * 
-     * @param string $content Conteudo da mensagem
-     * @return void
-     */
-    public static function error(string $content): void
+
+    private function validateMethod(string $name): void
     {
-        self::add('error', $content);
+        if (! in_array($name, self::MESSAGE_LEVES)) throw new BadMethodCallException('Method '.$name.' not found.');
     }
-    /**
-     * Adiciona mensagem de aviso (cor amarela)
-     * 
-     * @param string $content Conteudo da mensagem
-     * @return void
-     */
-    public static function warning(string $content): void
+
+    public static function __callStatic(string $name, array $arguments = []): self
     {
-        self::add('warning', $content);
+        $instance = new static;
+        $instance->validateMethod($name);
+        $instance->add($name, ...$arguments);
+        return $instance;
+    }
+
+    public function __call(string $name, array $arguments = []): self
+    {
+        $this->validateMethod($name);
+        $this->add($name, ...$arguments);
+        return $this;
     }
 }

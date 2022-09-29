@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserGroup;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -19,7 +20,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -31,7 +32,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -42,7 +43,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -54,7 +55,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->group === 'admin';
+        return $user->group === UserGroup::ADMIN->value;
     }
 
     /**
@@ -66,7 +67,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->group === 'admin' && $user->id !== $model->id;
+        return $user->group === UserGroup::ADMIN->value && $user->id !== $model->id;
     }
 
     /**
@@ -78,7 +79,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $user->group === 'admin' && $user->id !== $model->id;
+        return $user->group === UserGroup::ADMIN->value && $user->id !== $model->id;
     }
 
     /**

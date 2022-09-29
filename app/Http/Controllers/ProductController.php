@@ -20,11 +20,13 @@ class ProductController extends Controller
     private function getCommonData(string $type, array $props = []): array
     {
         return [
-            'products' => Product::withTrashed()->get([
-                'id',
-                'name',
-                'deleted_at',
-            ]),
+            'products' => Product::withTrashed()
+                ->orderBy('name')
+                ->get([
+                    'id',
+                    'name',
+                    'deleted_at',
+                ]),
             'type' => $type,
             ...$props,
         ];

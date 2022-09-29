@@ -48,25 +48,17 @@
 
     const data: Data = {
         status_id: proposal.status_id,
+        partner_id: proposal.partner_id || '' as null,
         required_amount: proposal.required_amount,
         additional_info: proposal.additional_info,
+        status_note: proposal.status_note,
+        contract_identifier: proposal.contract_identifier,
     }
 
     function handleSubmit(): void
     {
         Inertia.patch(`/proposals/${proposal.id}`, data as any, { preserveScroll: true });
     }
-
-    /*
-    Permitir editar:
-        - o status e sua nota;
-        - o valor requerido;
-        - o parceiro vinculado ao produto;
-        - nº do contrato;
-        - info adicional;
-    Ao colocar uma proposta como aprovada ou fechada, não permitir editá-la mais;
-    Ao colocar uma proposta como aprovada, fazer a geração das comissões;
-    */
 </script>
 
 <svelte:head>
@@ -83,14 +75,14 @@
             <fieldset>
                 <legend>Produto</legend>
                 <Input type="text" label="Produto" value={proposal.product_name} error='' readonly />
-                <Select label="Parceiro" bind:value={data.partner_id} error={errors.partner_id} blank required>
+                <Select label="Parceiro" bind:value={data.partner_id} error={errors.partner_id} blank>
                     {#each partners as partner}
                         <option value={partner.id}>{partner.name}</option>
                     {/each}
                 </Select>
                 <br />
-                <Input type="number" label="Valor requerido (R$)" bind:value={data.required_amount} error={errors.required_amount} min=0 required />
-                <Input type="text" label="Nº Contrato" bind:value={data.contract_identifier} error={errors.contract_identifier} required />
+                <Input type="number" label="Valor requerido (R$)" bind:value={data.required_amount} error={errors.required_amount} min=0 required step="0.01" />
+                <Input type="text" label="Nº Contrato" bind:value={data.contract_identifier} error={errors.contract_identifier} />
             </fieldset>
             <fieldset>
                 <legend>Informações adicionais</legend>

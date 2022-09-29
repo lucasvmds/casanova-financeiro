@@ -23,11 +23,13 @@ class PartnerController extends Controller
     private function getCommonData(string $type, array $props = []): array
     {
         return [
-            'partners' => Partner::withTrashed()->get([
-                'id',
-                'name',
-                'deleted_at',
-            ]),
+            'partners' => Partner::withTrashed()
+                ->orderBy('name')
+                ->get([
+                    'id',
+                    'name',
+                    'deleted_at',
+                ]),
             'type' => $type,
             ...$props,
         ];

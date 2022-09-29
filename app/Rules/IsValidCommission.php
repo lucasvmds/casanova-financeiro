@@ -43,7 +43,7 @@ class IsValidCommission implements InvokableRule, DataAwareRule
 
         if (count($error = $validator->errors())) {
             $fail(
-                $error->get($attribute)[0]
+                $error->first($attribute)
             );
         }
     }

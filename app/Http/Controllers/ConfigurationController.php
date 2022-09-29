@@ -18,6 +18,8 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Configuration::class);
+
         return Inertia::render('Configuration/Index', [
             'statuses' => Status::withTrashed()->get([
                 'id',
@@ -40,6 +42,8 @@ class ConfigurationController extends Controller
      */
     public function update(UpdateConfigurationRequest $request)
     {
+        $this->authorize('update', Configuration::first());
+
         UpdateConfiguration::run($request->validated());
         FlashMessages::success('Configurações salvas com sucesso');
         return back();
