@@ -26,7 +26,10 @@ Route::post('session', [SessionController::class, 'store'])->middleware('throttl
 
 Route::middleware('auth')->group(function() {
     // Rotas módulo dashboard
-    Route::get('/', DashboardController::class)->name('dashboard.index');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('dashboard/last-activities', [DashboardController::class, 'activities'])->name('dashboard.activities');
+    Route::get('dashboard/most-actives', [DashboardController::class, 'actives'])->name('dashboard.actives');
+    Route::get('dashboard/numbers', [DashboardController::class, 'numbers'])->name('dashboard.numbers');
     // Rotas módulo de sessão
     Route::get('session/edit', [SessionController::class, 'edit'])->name('session.edit');
     Route::patch('session', [SessionController::class, 'update'])->name('session.update');
