@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,8 @@ Route::middleware('auth')->group(function() {
     Route::patch('/configurations', [ConfigurationController::class, 'update'])->name('configurations.update');
     // Rotas módulo de propostas
     Route::resource('proposals', ProposalController::class)->except(['show', 'destroy']);
+    // Rotas módulo relatórios
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('reports/url', [ReportController::class, 'url'])->name('reports.url');
+    Route::get('reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
 });

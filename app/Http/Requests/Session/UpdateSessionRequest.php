@@ -26,7 +26,6 @@ class UpdateSessionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
             'email' => [
                 'required',
                 Rule::unique('users')->ignore($this->user()->id),

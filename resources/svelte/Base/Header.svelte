@@ -17,6 +17,7 @@
         <Link href="/partners">Parceiros</Link>
         <Link href="/products">Produtos</Link>
         <Link href="/users">Usuários</Link>
+        <Link href="/reports">Relatórios</Link>
         <Link href="/configurations">Configurações</Link>
     </nav>
 

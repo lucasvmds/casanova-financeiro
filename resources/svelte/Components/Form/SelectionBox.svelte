@@ -4,6 +4,7 @@
         type: 'checkbox' | 'checkgroup' | 'radio',
         label: string,
         value: string | number = '',
+        selected: string = '',
         checked: boolean = false,
         group: (string | number)[] = [],
         error: string | undefined,
@@ -31,7 +32,7 @@
     {:else if type === 'checkbox'}
         <input type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change />
     {:else if type === 'radio'}
-        <input type="radio" {...$$restProps} bind:group={checked} {value} autocomplete='off' {disabled} on:change />
+        <input type="radio" {...$$restProps} bind:group={selected} {value} autocomplete='off' {disabled} on:change />
     {/if}
 
     <span>

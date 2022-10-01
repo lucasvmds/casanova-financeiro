@@ -1,12 +1,10 @@
 <script lang="ts">
     interface User {
         id: number;
-        name: string;
         email: string;
     }
 
     interface Data {
-        name: string;
         email: string;
         current_password: string;
         password?: string;
@@ -19,7 +17,6 @@
     export let errors: Errors<Data>, user: User;
 
     const data: Data = {
-        name: user.name,
         email: user.email,
         current_password: '',
         password: '',
@@ -40,9 +37,7 @@
     <form on:submit|preventDefault={handleSubmit} id="form-update-session">
         <fieldset class="container">
             <legend>Dados do usuário</legend>
-            <Input type="text" label="Nome" required bind:value={data.name} error={errors.name} size=30 />
             <Input type="email" label="E-Mail" required bind:value={data.email} error={errors.email} size=50 />
-            <br />
             <Input type="password" label="Senha atual" required bind:value={data.current_password} error={errors.current_password} size=30 />
             <br />
             <br />
