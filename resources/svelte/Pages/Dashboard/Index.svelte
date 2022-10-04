@@ -17,8 +17,10 @@
     <title>Painel</title>
 </svelte:head>
 
-<main>
+<main id="dashboard-page">
     <LastActivities />
     <MostActives />
     <Count />
 </main>
+
+<aside aria-hidden="true"></aside>

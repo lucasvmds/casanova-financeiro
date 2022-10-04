@@ -26,7 +26,7 @@
         id: number;
     }
 
-    import { Button, Input, Select, Errors, Error } from "../../Components/Form/index.svelte";
+    import { Button, Input, Select, Errors, Error, TextArea } from "../../Components/Form/index.svelte";
     import { Inertia } from "@inertiajs/inertia";
     import { Link } from "@inertiajs/inertia-svelte";
     import Contact, { ContactData } from "./Contact.svelte";
@@ -143,11 +143,15 @@
                     <Contact bind:contacts={data.contacts} {errors} {index} />
                 {/each}
             </fieldset>
+            <fieldset>
+                <legend>Informações adicionais</legend>
+                <TextArea label="" bind:value={data.additional_info} error={errors.additional_info} cols=80 rows=10 />
+            </fieldset>
         </form>
     </div>
 </main>
 
-<aisde>
+<aside>
     <Button type="submit" form="form-customer">
         Salvar
     </Button>
@@ -155,4 +159,4 @@
     <Link href="/customers">
         Voltar
     </Link>
-</aisde>
+</aside>

@@ -10,7 +10,7 @@
 
 {#if error}
     <br />
-    <small>
-        <i>{error}</i>
+    <small class="error-component">
+        {error}
     </small>
 {/if}

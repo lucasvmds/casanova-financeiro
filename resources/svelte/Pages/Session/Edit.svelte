@@ -47,7 +47,7 @@
     </form>
 </main>
 
-<aisde>
+<aside>
     <Button type="submit" form="form-update-session">
         Salvar
     </Button>
@@ -55,4 +55,4 @@
     <Link href="/">
         Voltar
     </Link>
-</aisde>
+</aside>

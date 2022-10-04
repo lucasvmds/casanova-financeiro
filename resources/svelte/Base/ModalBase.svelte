@@ -35,13 +35,15 @@
 </script>
 
 <div id="dialog" role="dialog" class:open={component !== null}>
-    {#if typeof component === 'string'}
-        {@html component}
-    {:else}
-        <svelte:component this={component} {props} />
-    {/if}
+    <div id="dialog-body">
+        {#if typeof component === 'string'}
+            {@html component}
+        {:else}
+            <svelte:component this={component} {props} />
+        {/if}
 
-    {#if closeButton}
-        <Buttons />
-    {/if}
+        {#if closeButton}
+            <Buttons />
+        {/if}
+    </div>
 </div>

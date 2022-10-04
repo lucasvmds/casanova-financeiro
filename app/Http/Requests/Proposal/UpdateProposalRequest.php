@@ -20,7 +20,7 @@ class UpdateProposalRequest extends FormRequest
 
     private function selectedStatusIsApproved(): bool
     {
-        return Status::find($this->input('status_id'))->main === MainStatus::APPROVED->value;
+        return Status::withTrashed()->find($this->input('status_id'))->main === MainStatus::APPROVED->value;
     }
 
     private function requiredIfStatusIsApproved(string $field): string

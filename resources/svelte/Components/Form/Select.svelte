@@ -8,7 +8,7 @@
         disabled: boolean = false;
 </script>
 
-<label class="select-component" class:disabled>
+<label class="input-component" class:disabled>
     <span>{label}</span>
     <select bind:value {...$$restProps} on:change autocomplete="on" {disabled}>
         {#if blank}

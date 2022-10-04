@@ -3,7 +3,7 @@
     export { closeModal, openModal };
 </script>
 
-<div id="buttons">
+<div id="dialog-buttons">
     <slot />
     <button type="button" on:click={closeModal}>
         Fechar

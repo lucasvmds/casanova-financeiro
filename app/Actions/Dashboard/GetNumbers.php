@@ -7,6 +7,7 @@ namespace App\Actions\Dashboard;
 use App\Enums\MainStatus;
 use App\Enums\UserGroup;
 use App\Models\Commission;
+use App\Support\CurrencyFormatter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -29,18 +30,22 @@ class GetNumbers
         ];
     }
 
-    public static function approvedAmount(): float
+    public static function approvedAmount(): string
     {
-        return (float) DB::table('proposals')
-            ->join('statuses', 'statuses.id', '=', 'proposals.status_id')
-            ->where('statuses.main', MainStatus::APPROVED->value)
-            ->sum('proposals.required_amount');
+        return CurrencyFormatter::format(
+            (float) DB::table('proposals')
+                ->join('statuses', 'statuses.id', '=', 'proposals.status_id')
+                ->where('statuses.main', MainStatus::APPROVED->value)
+                ->sum('proposals.required_amount')
+        );
     }
 
-    public static function businessCommission(): float
+    public static function businessCommission(): string
     {
-        return Auth::user()->group === UserGroup::ADMIN->value ?
-            (float) Commission::whereNull('user_id')->sum('amount') :
-            0;
+        return CurrencyFormatter::format(
+            Auth::user()->group === UserGroup::ADMIN->value ?
+                (float) Commission::whereNull('user_id')->sum('amount') :
+                0
+        );
     }
 }

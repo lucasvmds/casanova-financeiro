@@ -48,11 +48,9 @@
     }
 </script>
 
-<div class="container">
-    <form id="form-products" on:submit|preventDefault={handleSubmit} class="container">
-        <legend>
-            {type === 'create' ? 'Novo produto' : product?.name}
-        </legend>
-        <Input type="text" label="Nome" bind:value={data.name} error={errors.name} size=30 required />
-    </form>
-</div>
+<form id="form-products" on:submit|preventDefault={handleSubmit} class="container">
+    <legend>
+        {type === 'create' ? 'Novo produto' : product?.name}
+    </legend>
+    <Input type="text" label="Nome" bind:value={data.name} error={errors.name} size=30 required />
+</form>

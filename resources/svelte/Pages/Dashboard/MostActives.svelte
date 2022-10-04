@@ -35,7 +35,7 @@
 
 <div class="container">
     {#if most_actives}
-        <dl>
+        <dl id="most-actives-list">
             <ItemData name="Parceiros mais utilizados" items={most_actives.partners} />
             <ItemData name="Produtos mais requisitados" items={most_actives.products} />
             <ItemData name="Melhores vendedores" items={most_actives.sellers} />

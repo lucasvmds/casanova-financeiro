@@ -26,7 +26,7 @@
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="selection-box-component {type}" class:disabled>
+<label class="input-component {type}" class:disabled>
     {#if type === 'checkgroup'}
         <input type="checkbox" {...$$restProps} {value} autocomplete='off' {disabled} checked={Boolean(group.find(item => item == value))} on:change={bindGroup} />
     {:else if type === 'checkbox'}

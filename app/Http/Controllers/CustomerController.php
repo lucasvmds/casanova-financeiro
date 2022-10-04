@@ -112,7 +112,7 @@ class CustomerController extends Controller
     public function update(StoreUpdateCustomerRequest $request, Customer $customer)
     {
         UpdateCustomer::run($request->validated(), $customer);
-        FlashMessages::success('Cliente cadastrado com sucesso');
+        FlashMessages::success('Cliente editado com sucesso');
         return redirect()->route('customers.index');
     }
 

@@ -213,4 +213,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'initial_user' => [
+        'password' => env('APP_INITIAL_USER_PASS'),
+        'email' => env('APP_INITIAL_USER_MAIL'),
+    ]
 ];

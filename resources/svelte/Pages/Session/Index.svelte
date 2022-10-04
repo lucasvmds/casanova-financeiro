@@ -12,8 +12,9 @@
         remember: boolean;
     }
 
-    import { Input, SelectionBox, Button, Error } from "../../Components/Form/index.svelte";
+    import { Input, SelectionBox, Error } from "../../Components/Form/index.svelte";
     import { Inertia } from "@inertiajs/inertia";
+    import { loop_guard } from "svelte/internal";
     export let errors: Errors;
     
     const data: Data = {
@@ -32,19 +33,19 @@
 </svelte:head>
 
 <main id="login-page">
-    <h1>Login</h1>
-    <form on:submit|preventDefault={handleSubmit}>
-        <Input type="email" label="Usuário" bind:value={data.email} error={errors.email} required />
-        <br />
-        <Input type="password" label="Senha" bind:value={data.password} error={errors.password} required />
-        <br />
-        <SelectionBox type="checkbox" label="Manter conectado" bind:checked={data.remember} error={errors.remember} />
-        <br />
-        <br />
-        <Button type="submit">Acessar</Button>
-        <br />
-        {#if errors.failed}
+    <div class="container">
+        <h1>
+            <img src="/logo.png" alt="logo da casa nova créditos" />
+        </h1>
+        <form on:submit|preventDefault={handleSubmit} id="form-login">
+            <Input type="email" label="Usuário" bind:value={data.email} error={errors.email} required size=20 />
+            <br />
+            <Input type="password" label="Senha" bind:value={data.password} error={errors.password} required size=20 />
+            <br />
+            <SelectionBox type="checkbox" label="Manter conectado" bind:checked={data.remember} error={errors.remember} />
+            <br />
             <Error error={errors.failed} />
-        {/if}
-    </form>
+        </form>
+        <button type="submit" form="form-login">Acessar</button>
+    </div>
 </main>

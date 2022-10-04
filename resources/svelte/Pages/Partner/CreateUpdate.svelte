@@ -83,18 +83,21 @@
 
 <div class="container">
     <form id="form-partners" on:submit|preventDefault={handleSubmit}>
-        <legend>
-            {type === 'create' ? 'Novo parceiro' : partner?.name}
-        </legend>
-        <Input type="text" label="Nome" bind:value={data.name} error={errors.name} size=30 required />
+        <fieldset>
+            <legend>
+                {type === 'create' ? 'Novo parceiro' : partner?.name}
+            </legend>
+            <Input type="text" label="Nome" bind:value={data.name} error={errors.name} size=30 required />
+        </fieldset>
         <fieldset>
             <legend>Produtos</legend>
             <Error error={errors.products} />
 
             {#each products as product}
-                <SelectionBox type="checkgroup" label={product.name} bind:group={data.products} value={product.id} error={errors[`products.${product.id}`]} />
-                <Input type="number" max=100 min=0 label="Comissão" bind:value={data.commissions[product.id]} error={errors[`commissions.${product.id}`]} />
-                <br />
+                <div class="partner-product-component">
+                    <SelectionBox type="checkgroup" label={product.name} bind:group={data.products} value={product.id} error={errors[`products.${product.id}`]} />
+                    <Input type="number" max=100 min=0 label="Comissão" bind:value={data.commissions[product.id]} error={errors[`commissions.${product.id}`]} />
+                </div>
             {:else}
                 Vocẽ não possui produtos cadastrados
             {/each}

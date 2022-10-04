@@ -8,7 +8,9 @@ export default defineConfig({
         laravel({
             input: 'resources/js/app.js',
             refresh: [
-                'resources/**',
+                'resources/js/**',
+                'resources/svelte/**',
+                'resources/views/**',
             ],
         }),
         svelte({

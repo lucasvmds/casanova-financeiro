@@ -1,0 +1,16 @@
+aside {
+    margin: .5em .5em 0;
+    & > .button-component, & > a {
+        .container();
+        margin: 0 .5em;
+        padding: 1em 1.5em;
+        font-weight: 400;
+        color: var(--accent-color);
+        border-radius: 2em;
+        transition: padding .2s;
+
+        &:hover {
+            padding: 1em 2.5em;
+        }
+    }
+}

@@ -30,15 +30,25 @@
     });
 </script>
 
-<dl class="container">
-    <dt>Propostas aprovadas</dt>
-    <dd>{numbers?.proposals.approved ?? '...'}</dd>
-    <dt>Propostas fechadas</dt>
-    <dd>{numbers?.proposals.closed ?? '...'}</dd>
-    <dt>Propostas em aberto</dt>
-    <dd>{numbers?.proposals.open ?? '...'}</dd>
-    <dt>Valores aprovados</dt>
-    <dd>R${numbers?.approved_amount ?? '...'}</dd>
-    <dt>Comissões totais</dt>
-    <dd>R${numbers?.business_commission ?? '...'}</dd>
+<dl class="container" id="count-list">
+    <div>
+        <dt>Propostas aprovadas</dt>
+        <dd>{numbers?.proposals.approved ?? '...'}</dd>
+    </div>
+    <div>
+        <dt>Propostas fechadas</dt>
+        <dd>{numbers?.proposals.closed ?? '...'}</dd>
+    </div>
+    <div>
+        <dt>Propostas em aberto</dt>
+        <dd>{numbers?.proposals.open ?? '...'}</dd>
+    </div>
+    <div>
+        <dt>Valores aprovados</dt>
+        <dd>{numbers?.approved_amount ?? '...'}</dd>
+    </div>
+    <div>
+        <dt>Comissões totais</dt>
+        <dd>{numbers?.business_commission ?? '...'}</dd>
+    </div>
 </dl>

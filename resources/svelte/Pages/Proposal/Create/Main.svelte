@@ -37,6 +37,7 @@
     function handleSelectedCustomer(event: CustomEvent<{ id: number; }>): void
     {
         data.customer_id = event.detail.id;
+        errors.customer_id = null;
     }
 
     onMount(
@@ -59,19 +60,13 @@
 <main>
     <form id="form-store-proposal" on:submit|preventDefault={handleSubmit} class="container">
         <fieldset>
-            <legend>
-                Cliente
-                <Button type="button" on:click={openSearchCustomerModal}>
-                    Buscar cliente
-                </Button>
-            </legend>
-            <Error error={errors.customer_id} />
-
+            <legend>Cliente</legend>
             {#if data.customer_id}
                 <CustomerInfo id={data.customer_id} />
             {:else}
                 Cliente não selecionado
             {/if}
+            <Error error={errors.customer_id} />
         </fieldset>
         <fieldset>
             <legend>Produto</legend>
@@ -84,7 +79,7 @@
         </fieldset>
         <fieldset>
             <legend>Informações adicionais</legend>
-            <TextArea label="Adicione informações que achar relevante" bind:value={data.additional_info} error={errors.additional_info} cols=60 rows=10 />
+            <TextArea label="" bind:value={data.additional_info} error={errors.additional_info} cols=60 rows=10 />
         </fieldset>
     </form>
 </main>
@@ -92,6 +87,9 @@
 <aside>
     <Button type="submit" form="form-store-proposal">
         Salvar
+    </Button>
+    <Button type="button" on:click={openSearchCustomerModal}>
+        Buscar cliente
     </Button>
     <Link href="/proposals">
         Voltar

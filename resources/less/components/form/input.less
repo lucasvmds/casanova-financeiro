@@ -1,0 +1,20 @@
+.input-component {
+    position: relative;
+    margin: .5em;
+    display: inline-block;
+    vertical-align: top;
+
+    & > input, & > select, & > textarea {
+        margin-left: .1em;
+        padding: .5em;
+        font-family: inherit;
+        font-weight: 300;
+        background-color: transparent;
+        border-radius: .5em;
+        border-width: 1px;
+    }
+
+    & > input[type="color"] {
+        padding: .1em;
+    }
+}

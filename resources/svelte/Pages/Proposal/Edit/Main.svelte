@@ -65,7 +65,7 @@
     <title>Editar proposta</title>
 </svelte:head>
 
-<main>
+<main id="proposal-edit-page">
     <form id="form-update-proposal" on:submit|preventDefault={handleSubmit}>
         <div class="container">
             <fieldset>
@@ -86,13 +86,13 @@
             </fieldset>
             <fieldset>
                 <legend>Informações adicionais</legend>
-                <TextArea label="Adicione informações que achar relevante" bind:value={data.additional_info} error={errors.additional_info} cols=60 rows=10 />
+                <TextArea label="" bind:value={data.additional_info} error={errors.additional_info} cols=60 rows=10 />
             </fieldset>
         </div>
         <div class="container">
             <fieldset>
                 <legend>Status</legend>
-                <Select label="" bind:value={data.status_id} error={errors.status_id} style="color: #FFF; background-color: {statuses.find(item => item.id === data.status_id).color};">
+                <Select label="" bind:value={data.status_id} error={errors.status_id} data-status style="--status-color: {statuses.find(item => item.id === data.status_id).color};">
                     {#each statuses as status}
                         <option value={status.id}>{status.name}</option>
                     {/each}
@@ -104,7 +104,7 @@
             </fieldset>
             <fieldset>
                 <legend>Observação</legend>
-                <TextArea label="Adicione informações que achar relevante" bind:value={data.status_note} error={errors.status_note} cols=60 rows=10 />
+                <TextArea label="" bind:value={data.status_note} error={errors.status_note} cols=60 rows=10 />
             </fieldset>
         </div>
     </form>

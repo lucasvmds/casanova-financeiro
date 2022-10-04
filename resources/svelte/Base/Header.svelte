@@ -10,6 +10,9 @@
 </script>
 
 <header id="app-header">
+    <h1>
+        <img src="/logo.png" alt="logo da casa nova créditos" />
+    </h1>
     <nav>
         <Link href="/">Dashboard</Link>
         <Link href="/customers">Clientes</Link>

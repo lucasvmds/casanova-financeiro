@@ -31,9 +31,9 @@
 </svelte:head>
 
 <main>
-    <form on:submit|preventDefault={addUser} id="form-store-user">
-        <div class="container">
-            <h2>Dados do usuário</h2>
+    <form on:submit|preventDefault={addUser} id="form-store-user" class="container">
+        <fieldset>
+            <legend>Dados do usuário</legend>
             <Input type="text" label="Nome" required bind:value={data.name} error={errors.name} size=30 />
             <Input type="email" label="E-Mail" required bind:value={data.email} error={errors.email} size=50 />
             <br />
@@ -45,11 +45,11 @@
             <br />
             <Input type="password" label="Senha" required bind:value={data.password} error={errors.password} size=30 />
             <Input type="password" label="Confirmar senha" required bind:value={data.password_confirmation} error={errors.password_confirmation} size=30 />
-        </div>
+        </fieldset>
     </form>
 </main>
 
-<aisde>
+<aside>
     <Button type="submit" form="form-store-user">
         Salvar
     </Button>
@@ -57,4 +57,4 @@
     <Link href="/users">
         Voltar
     </Link>
-</aisde>
+</aside>

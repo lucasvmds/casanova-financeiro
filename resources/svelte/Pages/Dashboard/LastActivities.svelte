@@ -42,10 +42,8 @@
                     <td>{proposal.customer_name}</td>
                     <td>{proposal.product_name}</td>
                     <td>{makeDate(proposal.updated_at).format('d/m/Y H:i')}</td>
-                    <td>
-                        <span style="color: #FFF; background-color: {proposal.current_status.color};">
-                            {proposal.current_status.name}
-                        </span>
+                    <td style="color: #FFF; background-color: {proposal.current_status.color};">
+                        {proposal.current_status.name}
                     </td>
                 </tr>
             {:else}
