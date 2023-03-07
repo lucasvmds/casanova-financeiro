@@ -194,6 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\DatabaseServiceProvider::class,
 
     ],
 
@@ -212,4 +213,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'initial_user' => [
+        'password' => env('APP_INITIAL_USER_PASS'),
+        'email' => env('APP_INITIAL_USER_MAIL'),
+    ]
 ];

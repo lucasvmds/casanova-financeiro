@@ -1,0 +1,38 @@
+#login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > .container {
+        margin-top: 3em;
+        text-align: center;
+
+        & > h1 {
+            margin: 0;
+            color: var(--accent-color);
+
+            & > img {
+                width: 7em;
+                height: auto;
+            }
+        }
+
+        & > form {
+            margin: 3em 0;
+            text-align: left;
+
+            .input-component > input:not([type="checkbox"]) {
+                width: 100%;
+            }
+        }
+
+        & > button {
+            font-size: 1.3em;
+            color: var(--accent-color);
+            border-bottom: solid .15em transparent;
+            &:hover {
+                border-color: var(--accent-color);
+            }
+        }
+    }
+}

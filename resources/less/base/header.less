@@ -1,0 +1,46 @@
+#app-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #FFF;
+    box-shadow: 0 .2em 2em rgba(0, 0, 0, .1);
+
+    & > h1 {
+        & > img {
+            margin: 0 1rem;
+            width: 9rem;
+            height: auto;
+        }
+    }
+    
+    & > nav {
+        display: flex;
+        flex-direction: column;
+
+        & > a {
+            padding: 1em;
+            &:hover {
+                color: #FFF;
+                background-color: var(--accent-color);
+            }
+        }
+    }
+
+    & > div {
+        padding: 1em;
+        text-align: right;
+
+        & > a {
+            display: block;
+            margin-bottom: .5em;
+            white-space: nowrap;
+        }
+
+        & > a, & > button {
+            border-bottom: solid .15em transparent;
+            &:hover {
+                border-bottom-color: var(--accent-color);
+            }
+        }
+    }
+}

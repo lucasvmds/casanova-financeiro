@@ -1,0 +1,47 @@
+#dashboard-page {
+    h2 {
+        color: var(--accent-color);
+    }
+
+    #most-actives-list {
+        & > dt {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: var(--accent-color);
+            &:not(:first-child) {
+                margin-top: 2em;
+            }
+        }
+        & > dd {
+            li {
+                display: inline-block;
+                margin: 0 2em 0 .5em;
+            }
+         }
+    }
+
+    #count-list {
+        & > div {
+            margin: .5em 1em;
+            display: inline-block;
+            
+            & > dt {
+                font-size: 1.1em;
+                font-weight: 500;
+                margin-bottom: .2em;
+            }
+
+            & > dd {
+                padding: .5em;
+                font-weight: 500;
+                text-align: center;
+                color: #FFF;
+                background-color: var(--accent-color);
+                border-radius: .5em;
+                &:not(:last-child) {
+                    margin-bottom: 2em;
+                }
+            }
+        }
+    }
+}
